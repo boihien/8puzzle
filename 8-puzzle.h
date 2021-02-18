@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-const size = 9;
+const int size = 9;
 
 class puzzleBoard{
     public:
@@ -9,7 +9,7 @@ class puzzleBoard{
         int initial[size];
         void displayBoard();
         bool solvedState();
-        void uniformSearch();
+        void uniformSearch(puzzleBoard node, int algo);
         void misplacedHueristic();
         void manhattenDistance();
 };
