@@ -56,7 +56,7 @@ void puzzleBoard::manhattenDistance(){
 
 }
 
-int puzzle[maxPuzzleSize];
+int board[maxPuzzleSize];
 int main(){
     int userInput;
     std::cout << "Welcome to Boi-Hien's 8-puzzle solver." << std::endl;
@@ -64,29 +64,49 @@ int main(){
     std::cin >> userInput;
 
     if(userInput == 1){
-        puzzle[0] = 1;
-        puzzle[1] = 2;
-        puzzle[2] = 3;
+        board[0] = 1;
+        board[1] = 2;
+        board[2] = 3;
 
-        puzzle[3] = 4;
-        puzzle[4] = 8;
-        puzzle[5] = 0;
+        board[3] = 4;
+        board[4] = 8;
+        board[5] = 0;
         
-        puzzle[6] = 7;
-        puzzle[7] = 6;
-        puzzle[8] = 5;
+        board[6] = 7;
+        board[7] = 6;
+        board[8] = 5;
 
         std::cout << "Enter your choice of algorithm" << std::endl;
         std::cout << "1. Uniform Cost Search" << std::endl;
-        std::cout << "A * with the Misplaced Tile heuristic" << std::endl;
-        std::cout << "A * with the Manhatten distance heuristic" << std::endl;
+        std::cout << "2. A * with the Misplaced Tile heuristic" << std::endl;
+        std::cout << "3. A * with the Manhatten distance heuristic" << std::endl;
 
-        puzzleBoard object1;
-        object1.displayBoard();
+        std::cin >> userInput;
+
+        if(userInput == 1){
+            puzzleBoard createObject;
+            createObject.displayBoard();
+            createObject.uniformSearch(createObject, userInput);
+        }
+        else if(userInput == 2){
+            puzzleBoard createObject;
+            createObject.displayBoard();
+            createObject.misplacedHueristic();
+        }
+        else if(userInput == 3){
+            puzzleBoard createObject;
+            createObject.displayBoard();
+            createObject.manhattenDistance();
+        }
+        else{
+            std:: cout << "Not a valid algorithm" << std::endl;
+            return 0;
+        }
 
     }
     if(userInput == 2){
         std::cout << "Enter your puzzle, use a zero to represent the blank" << std::endl;
+
     }
     
     return 0;
