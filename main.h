@@ -11,12 +11,6 @@ class puzzleBoard{
         int maxNodesQueue;//keeps track of maximum number of nodes in queue at a time
         int depth; //depth of the goal node
 
-
-        void RightSwap(); //swap the node from current to the right of board
-        void LeftSwap(); 
-        void BotSwap();
-        void TopSwap();
-
         void displayBoard(); //prints out board
         bool solvedState(); //keeps track if the board has reached the goal
         void uniformSearch(puzzleBoard node, int algo);
