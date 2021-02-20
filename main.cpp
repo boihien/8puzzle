@@ -1,24 +1,31 @@
 #include <iostream>
 #include <vector>
 #include "main.h"
-
-int maxNewNode = 0;
-std::vector<puzzleBoard> newNode;
+#include <queue>
+#include <list>
+#include <stack>
 
 puzzleBoard::puzzleBoard(){//default constructor
-    for(int i = 0; i < maxPuzzleSize; i++){
-        initial[i] = 0;
-    }
+    
 }
 
-void puzzleBoard::displayBoard(){
-    std::cout << initial[0] << initial[1] << initial[2] << std::endl;
-    std::cout << initial[3] << initial[4] << initial[5] << std::endl;
-    std::cout << initial[6] << initial[7] << initial[8] << std::endl;
+void general_search(){
+
 }
 
-bool puzzleBoard::solvedState(){
-    if (initial[0] == 1 && initial[1] == 2 && initial[2] == 3 && initial[3] == 4 && initial[4] == 5 && initial[5] == 6 && initial[6] == 6 && initial[7] == 7 && initial[8] == 8 && initial[9] == 0){
+bool puzzleBoard::solvedState(vector<vector<int>> board){
+    vector<vector<int>> solved;
+    solved[0][0] = 1;
+    solved[0][1] = 2;
+    solved[0][2] = 3;
+    solved[1][0] = 4;
+    solved[1][1] = 5;
+    solved[1][2] = 6;
+    solved[2][0] = 7;
+    solved[2][1] = 8;
+    solved[2][2] = 0;
+
+    if (board == solved){
         return true;
     }
     return false;
@@ -27,9 +34,9 @@ bool puzzleBoard::solvedState(){
 //expand cheapest cost node
 //g(n) = cost to current
 //h(n) = number of steps to goal
-void puzzleBoard::uniformSearch(puzzleBoard node, int algo){
+void puzzleBoard::uniformSearch(){
     std::cout << "Expanding state " << std::endl;
-    node.displayBoard(); 
+    
     /*Peusodo code to follow
     function general-search(problem, QUEUEING-FUNCTION)
     nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
@@ -44,18 +51,15 @@ void puzzleBoard::uniformSearch(puzzleBoard node, int algo){
 }
 
 //add up all number of misplaced tiles 
-void puzzleBoard::misplacedHueristic(){
+int puzzleBoard::misplacedHueristic(vector<vector<int>> board){
 
 }
 
 //for each wrong piece move magically into correct position
 //add up number of moves for a total (h(n))
-void puzzleBoard::manhattenDistance(){
-
+int puzzleBoard::manhattenDistance(vector<vector<int>> board){
 
 }
-
-int board[maxPuzzleSize];
 int main(){
     int userInput;
     std::cout << "Welcome to Boi-Hien's 8-puzzle solver." << std::endl;
@@ -67,17 +71,17 @@ int main(){
         //1 2 3
         //4 8 0
         //7 6 5
-        board[0] = 1;
-        board[1] = 2;
-        board[2] = 3;
+        /*position[0] = 1;
+        position[1] = 2;
+        position[2] = 3;
 
-        board[3] = 4;
-        board[4] = 8;
-        board[5] = 0;
+        position[3] = 4;
+        position[4] = 8;
+        position[5] = 0;
         
-        board[6] = 7;
-        board[7] = 6;
-        board[8] = 5;
+        position[6] = 7;
+        position[7] = 6;
+        position[8] = 5;*/
 
         std::cout << "Enter your choice of algorithm" << std::endl;
         std::cout << "1. Uniform Cost Search" << std::endl;
@@ -87,19 +91,13 @@ int main(){
         std::cin >> userInput;
 
         if(userInput == 1){
-            puzzleBoard createObject;
-            createObject.displayBoard();
-            createObject.uniformSearch(createObject, userInput);
+            
         }
         else if(userInput == 2){
-            puzzleBoard createObject;
-            createObject.displayBoard();
-            createObject.misplacedHueristic();
+            
         }
         else if(userInput == 3){
-            puzzleBoard createObject;
-            createObject.displayBoard();
-            createObject.manhattenDistance();
+           
         }
         else{
             std:: cout << "Not a valid algorithm" << std::endl;
@@ -116,23 +114,23 @@ int main(){
         std::cin >> input1;
         std::cin >> input2;
         std::cin >> input3;
-        board[0] = input1;
-        board[1] = input2;
-        board[2] = input3;
+        /*position[0] = input1;
+        position[1] = input2;
+        position[2] = input3;*/
         std::cout << "Enter the second row, use space or tabs between numbers" << std::endl;
         std::cin >> input1;
         std::cin >> input2;
         std::cin >> input3;
-        board[3] = input1;
-        board[4] = input2;
-        board[5] = input3;
+        /*position[3] = input1;
+        position[4] = input2;
+        position[5] = input3;*/
         std::cout << "Enter the third row, use space or tabs between numbers" << std::endl;
         std::cin >> input1;
         std::cin >> input2;
         std::cin >> input3;
-        board[6] = input1;
-        board[7] = input2;
-        board[8] = input3;
+        /*position[6] = input1;
+        position[7] = input2;
+        position[8] = input3;*/
 
         std::cout << "Enter your choice of algorithm" << std::endl;
         std::cout << "1. Uniform Cost Search" << std::endl;
@@ -142,19 +140,13 @@ int main(){
         std::cin >> userInput;
 
         if(userInput == 1){
-            puzzleBoard createObject;
-            createObject.displayBoard();
-            createObject.uniformSearch(createObject, userInput);
+            
         }
         else if(userInput == 2){
-            puzzleBoard createObject;
-            createObject.displayBoard();
-            createObject.misplacedHueristic();
+           
         }
         else if(userInput == 3){
-            puzzleBoard createObject;
-            createObject.displayBoard();
-            createObject.manhattenDistance();
+           
         }
         else{
             std:: cout << "Not a valid algorithm" << std::endl;
