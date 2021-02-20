@@ -11,9 +11,10 @@ const int maxPuzzleSize = 9;
 //expand nodes with smallest f(n) value
 //f(n) = g(n) + h(n)
 //tuple<h(n), depth, 2dvector>
+//compare struct for priority queue
 struct compare{
     bool operator()(tuple<int, int, vector<vector<int>>> b1, tuple<int, int, vector<vector<int>>> b2){
-        return get<0>(b1) + get<1>(b1) > get<0>(b2) + get<1>(b2);
+        return get<0>(b1) + get<1>(b1) > get<0>(b2) + get<1>(b2);//returns the larger f(n)
     }
 };
 class puzzleBoard{
