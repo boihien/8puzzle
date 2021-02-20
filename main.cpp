@@ -4,8 +4,26 @@
 #include <queue>
 #include <list>
 #include <stack>
+
+/*Peusodo code to follow from sepcs
+    function general-search(problem, QUEUEING-FUNCTION)
+    nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
+    loop do
+        if EMPTY(nodes) then return "failure"
+            node = REMOVE-FRONT(nodes)
+        if problem.GOAL-TEST(node.STATE) succeeds then return node
+            nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
+    end*/
 puzzleBoard::puzzleBoard(){//default constructor
     
+}
+
+//expand cheapest cost node
+//g(n) = cost to current
+//h(n) = number of steps to goal
+int puzzleBoard::uniformSearch(vector<vector<int>> node){
+    int h = 0;
+    return h;
 }
 
 //add up all number of misplaced tiles
@@ -47,7 +65,7 @@ int puzzleBoard::manhattenDistance(vector<vector<int>> board){
     int total;
     for(int i = 0; i < 3; i++){//row
         for(int j = 0; j < 3; j++){
-
+            
         }
     }
 }
@@ -63,15 +81,6 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
     else if(algo == 3){
         heuristic = manhattenDistance(board);
     }
-    /*Peusodo code to follow from sepcs
-    function general-search(problem, QUEUEING-FUNCTION)
-    nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
-    loop do
-        if EMPTY(nodes) then return "failure"
-            node = REMOVE-FRONT(nodes)
-        if problem.GOAL-TEST(node.STATE) succeeds then return node
-            nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
-    end*/
 
     int maxNodes = 0;
     int success = -1;
@@ -82,7 +91,7 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
     //removing elements in order
     //pq<tuple, vector<tuple>, compare>
     std::priority_queue< tuple<int, int, std::vector<vector<int>>>, std::vector< tuple < int, int, std::vector<vector<int>>>>, compare> pq;
-    pq.push(node);
+    pq.push(node);//push tuple (node) onto the pq
 
     std::cout << "Expanding State" << std::endl;
     tuple <int, int, vector<vector<int>>> t = pq.top();//set t to the top of priority queue
@@ -93,7 +102,12 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
         }
         std::cout << endl;
     }
-
+    /*loop do
+        if EMPTY(nodes) then return "failure"
+            node = REMOVE-FRONT(nodes)
+        if problem.GOAL-TEST(node.STATE) succeeds then return node
+            nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
+    end*/
     while(success != 0 && success != 1){//loop until success is set to 0
         if(pq.empty()){
             std::cout << "Error, queue empty" << endl;
@@ -101,33 +115,43 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
             return;
         }
     }
+}
 
+void puzzleBoard::expansion(tuple<int, int, vector<vector<int>>> node, priority_queue<tuple<int, int, vector<vector<int>>>, vector<tuple<int, int, vector<vector<int>>>>, compare> &pq, int algo){
+    int heuristic = 0;
+    vector<vector<int>> board = get<2> (node); //get 2 index in tuple node
+    int row; int col; //keep track of where the zero is
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            if(board[i][j] == 0){
+                row = i;//assign zeroposition to tracker
+                col = j;
+            }
+        }
+    }
+
+    //1 2 3      1 2 0
+    //4 8 0 ---> 4 8 3
+    //7 6 5      7 6 5
+    vector<vector<int>> temp = board;
+    tuple<int, int, vector<vector<int>>> child;
+    if(row != 0){
+        swap(temp[row][col], temp[row-1][col]);//subtract from row to  move up
+    }
+    get<0>(child) = heuristic; //set child node h to 
+    h = get<0>(child);
+    get<1>(child) = get<1>(node) + 1; //count depth of node
+    depth = get<1>(child);
+    get<2>(child) = temp; //set parent 2d vector to new node
+    totalNodes++;
+    pq.push(child); //push child node onto pq
 }
 
 bool puzzleBoard::solvedState(vector<vector<int>> board){
-    vector<vector<int>> solved;
-    solved[0][0] = 1;
-    solved[0][1] = 2;
-    solved[0][2] = 3;
-    solved[1][0] = 4;
-    solved[1][1] = 5;
-    solved[1][2] = 6;
-    solved[2][0] = 7;
-    solved[2][1] = 8;
-    solved[2][2] = 0;
-
-    if (board == solved){
+    if(board[0][0] == 1 && board[0][1] == 2 && board[0][2] == 3 && board[1][0] == 4 && board[1][1] == 5 && board[1][2] == 6 && board[2][0] == 7 && board[2][1] == 8 && board[2][2] == 0){
         return true;
     }
     return false;
-}
-
-//expand cheapest cost node
-//g(n) = cost to current
-//h(n) = number of steps to goal
-void puzzleBoard::uniformSearch(){
-    std::cout << "Expanding state " << std::endl;
-    
 }
 int main(){
     int userInput;
