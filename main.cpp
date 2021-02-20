@@ -1,3 +1,13 @@
+/*Peusodo code to follow from sepcs
+    function general-search(problem, QUEUEING-FUNCTION)
+    nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
+    loop do
+        if EMPTY(nodes) then return "failure"
+            node = REMOVE-FRONT(nodes)
+        if problem.GOAL-TEST(node.STATE) succeeds then return node
+            nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
+    end*/
+
 #include <iostream>
 #include <vector>
 #include "main.h"
@@ -9,7 +19,58 @@ puzzleBoard::puzzleBoard(){//default constructor
     
 }
 
-void general_search(){
+//add up all number of misplaced tiles
+//not including the blank 
+int puzzleBoard::misplacedHueristic(vector<vector<int>> board){
+    int numMisplaced = 0;
+    if(board[0][0] != 1){
+        numMisplaced++;
+    }
+    if(board[0][1] != 2){
+        numMisplaced++;
+    }
+    if(board[0][2] != 3){
+        numMisplaced++;
+    }
+    if(board[1][0] != 4){
+        numMisplaced++;
+    }
+    if(board[1][1] != 5){
+        numMisplaced++;
+    }
+    if(board[1][2] != 6){
+        numMisplaced++;
+    }
+    if(board[2][0] != 7){
+        numMisplaced++;
+    }
+    if(board[2][1] != 8){
+        numMisplaced++;
+    }
+
+    return numMisplaced;
+
+}
+
+//for each wrong piece move magically into correct position
+//add up number of moves for a total (h(n))
+int puzzleBoard::manhattenDistance(vector<vector<int>> board){
+    int total;
+    for(int i = 0; i < 3; i++){//row
+        for(int j = 0; j < 3; j++){
+            
+        }
+    }
+}
+
+void general_search(vector<vector<int>> board, int algo){
+    int heuristic = 0;
+    if(algo == 1){
+        heuristic = 0;
+    }
+    else if(algo == 2){
+        heuristic = __is_move_assignable_impl
+    }
 
 }
 
@@ -37,28 +98,6 @@ bool puzzleBoard::solvedState(vector<vector<int>> board){
 void puzzleBoard::uniformSearch(){
     std::cout << "Expanding state " << std::endl;
     
-    /*Peusodo code to follow
-    function general-search(problem, QUEUEING-FUNCTION)
-    nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
-    loop do
-        if EMPTY(nodes) then return "failure"
-            node = REMOVE-FRONT(nodes)
-        if problem.GOAL-TEST(node.STATE) succeeds then return node
-            nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
-    end*/
-
-    
-}
-
-//add up all number of misplaced tiles 
-int puzzleBoard::misplacedHueristic(vector<vector<int>> board){
-
-}
-
-//for each wrong piece move magically into correct position
-//add up number of moves for a total (h(n))
-int puzzleBoard::manhattenDistance(vector<vector<int>> board){
-
 }
 int main(){
     int userInput;

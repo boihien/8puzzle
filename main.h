@@ -1,15 +1,16 @@
 #include <iostream>
 #include <vector>
+#include <tuple>//using tuple to store different elements together
 using namespace std;
 const int maxPuzzleSize = 9;
 
-//used this source to create priorit queue
+//used this source to create priority queue
 //https://www.geeksforgeeks.org/stl-priority-queue-for-structure-or-class/
-/*struct CompareOverload{
-    bool operator()(puzzleBoard b1, puzzleBoard b2){
-        return ((b1.depth + b1.h) < (b2.depth + b2.h));
+struct CompareOverload{
+    bool operator()(tuple<int, int, vector<vector<int>>> b1, tuple<int, int, vector<vector<int>>> b2){
+        return get<0>(b1) + get<1>(b1) > get<0>(b2) + get<1>(b2);
     }
-};*/
+};
 
 class puzzleBoard{
     public:
