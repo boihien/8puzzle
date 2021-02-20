@@ -1,20 +1,9 @@
-/*Peusodo code to follow from sepcs
-    function general-search(problem, QUEUEING-FUNCTION)
-    nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
-    loop do
-        if EMPTY(nodes) then return "failure"
-            node = REMOVE-FRONT(nodes)
-        if problem.GOAL-TEST(node.STATE) succeeds then return node
-            nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
-    end*/
-
 #include <iostream>
 #include <vector>
 #include "main.h"
 #include <queue>
 #include <list>
 #include <stack>
-
 puzzleBoard::puzzleBoard(){//default constructor
     
 }
@@ -58,18 +47,59 @@ int puzzleBoard::manhattenDistance(vector<vector<int>> board){
     int total;
     for(int i = 0; i < 3; i++){//row
         for(int j = 0; j < 3; j++){
-            
+
         }
     }
 }
 
-void general_search(vector<vector<int>> board, int algo){
+void puzzleBoard::general_search(vector<vector<int>> board, int algo){
     int heuristic = 0;
     if(algo == 1){
-        heuristic = 0;
+        heuristic = 0;//uniform cost sets h = 0
     }
     else if(algo == 2){
-        heuristic = __is_move_assignable_impl
+        heuristic = misplacedHueristic(board);
+    }
+    else if(algo == 3){
+        heuristic = manhattenDistance(board);
+    }
+    /*Peusodo code to follow from sepcs
+    function general-search(problem, QUEUEING-FUNCTION)
+    nodes = MAKE-QUEUE(MAKE-NODE(problem.INITIAL-STATE))
+    loop do
+        if EMPTY(nodes) then return "failure"
+            node = REMOVE-FRONT(nodes)
+        if problem.GOAL-TEST(node.STATE) succeeds then return node
+            nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
+    end*/
+
+    int maxNodes = 0;
+    int success = -1;
+
+    tuple<int, int, std::vector<vector<int>>> node (heuristic, 0, board);
+
+    //creates priority queue nodes that stores vector board
+    //removing elements in order
+    //pq<tuple, vector<tuple>, compare>
+    std::priority_queue< tuple<int, int, std::vector<vector<int>>>, std::vector< tuple < int, int, std::vector<vector<int>>>>, compare> pq;
+    pq.push(node);
+
+    std::cout << "Expanding State" << std::endl;
+    tuple <int, int, vector<vector<int>>> t = pq.top();//set t to the top of priority queue
+    std::vector<vector<int>> matrix = get<2>(t);//get the matrix in tuple t
+    for(int i = 0; i < 3; i++){//row
+        for(int j = 0; j < 3; j++){//col
+            std::cout << matrix[i][j];//print 2d vector at i,j of matrix of pq
+        }
+        std::cout << endl;
+    }
+
+    while(success != 0 && success != 1){//loop until success is set to 0
+        if(pq.empty()){
+            std::cout << "Error, queue empty" << endl;
+            success == 0;
+            return;
+        }
     }
 
 }

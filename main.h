@@ -6,12 +6,12 @@ const int maxPuzzleSize = 9;
 
 //used this source to create priority queue
 //https://www.geeksforgeeks.org/stl-priority-queue-for-structure-or-class/
-struct CompareOverload{
+//created class for priority queue
+struct compare{
     bool operator()(tuple<int, int, vector<vector<int>>> b1, tuple<int, int, vector<vector<int>>> b2){
         return get<0>(b1) + get<1>(b1) > get<0>(b2) + get<1>(b2);
     }
 };
-
 class puzzleBoard{
     public:
         puzzleBoard(); //initialize the board and make arrays = 0
@@ -26,4 +26,5 @@ class puzzleBoard{
         void uniformSearch();
         int misplacedHueristic(vector<vector<int>> node);
         int manhattenDistance(vector<vector<int>> node);
+        void expand();
 };
