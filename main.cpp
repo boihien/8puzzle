@@ -62,12 +62,13 @@ int puzzleBoard::misplacedHueristic(vector<vector<int>> board){
 //for each wrong piece move magically into correct position
 //add up number of moves for a total (h(n))
 int puzzleBoard::manhattenDistance(vector<vector<int>> board){
-    int total;
+    int total = 0;
     for(int i = 0; i < 3; i++){//row
         for(int j = 0; j < 3; j++){
             
         }
     }
+    return total;
 }
 bool puzzleBoard::solvedState(vector<vector<int>> board){
     if(board[0][0] == 1 && board[0][1] == 2 && board[0][2] == 3 && board[1][0] == 4 && board[1][1] == 5 && board[1][2] == 6 && board[2][0] == 7 && board[2][1] == 8 && board[2][2] == 0){
@@ -104,7 +105,7 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
     std::vector<vector<int>> matrix = get<2>(TOQ);//get the matrix in tuple t
     for(int i = 0; i < 3; i++){//row
         for(int j = 0; j < 3; j++){//col
-            std::cout << matrix[i][j];//print 2d vector at i,j of matrix of pq
+            std::cout << matrix[i][j] << " ";//print 2d vector at i,j of matrix of pq
         }
         std::cout << endl;
     }
@@ -114,7 +115,7 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
         if problem.GOAL-TEST(node.STATE) succeeds then return node
             nodes = QUEUEING-FUNCTION(nodes, EXPAND(node, problem.OPERATORS))
     end*/
-    while(success != 0 && success != 1){//loop until success is set to 0
+    while(success != 1 && success != 0){//loop until success is set to 0
         if(pq.empty()){
             std::cout << "Error, queue empty" << endl;
             success == 0;
@@ -125,27 +126,30 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
         pq.pop();//removing front node since no goal
 
         if(solvedState(get<2>(node))){
+            std::cout<< "Goal state!" << std::endl;
             matrix = get<2>(node);
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
-                    std::cout << matrix[i][j];
+                    std::cout << matrix[i][j] << " ";
                 }
                 std::cout << endl;
             } 
+            std::cout << "expanded a total of " << totalNodes << std::endl;
+            std::cout << "max number of nodes in queue was " << std::endl;
+            std::cout << "depth of goal was " << get<1>(TOQ) << std::endl;
+            success = 1;
+            return;
         }
-        std::cout << "expanded a total of " << totalNodes << std::endl;
-        std::cout << "max number of nodes in queue was " << std::endl;
-        std::cout << "depth of goal" << std::endl;
-
+        std::cout<< "reached here2" << std::endl;
         expansion(TOQ, pq, algo);
 
         TOQ = pq.top();//set current tuple to the new top
         matrix = get<2>(TOQ);//set matrix to the 2d vector in current tuple
-        std::cout << "The best state to expand with a g(n) =  " << get<1>(TOQ) << "and h(n) = " << get<0>(TOQ) << "is " << std::endl;
-
+        std::cout << "The best state to expand with a g(n) =  " << get<1>(TOQ) << " and h(n) = " << get<0>(TOQ) << " is " << std::endl;
+        std::cout << "" << std::endl;
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
-                std::cout << matrix[i][j];
+                std::cout << matrix[i][j] << " ";
             }
             std::cout << endl;
         }
@@ -199,7 +203,7 @@ void puzzleBoard::expansion(tuple<int, int, vector<vector<int>>> node, priority_
     //7 6 5      7 6 5
     temp = board;
     if(col != 0){
-        swap(temp[row][col], temp[row][col-1]);//subtract from col to left
+        swap(temp[row][col], temp[row][col-1]);//subtract from col to move left
         if(algo == 1){
             heuristic = 0;
         }
@@ -279,12 +283,25 @@ int main(){
     std::cin >> userInput;
 
     if(userInput == 1){
-        
-        std::cout << "reached here" << std::endl;
-        
-        
-        std::cout << "reached here" << std::endl;
-        
+        //populate default board
+        vector<int> row;
+        row.push_back(1);
+        row.push_back(2);
+        row.push_back(3);
+        board.push_back(row);
+
+        vector<int> row2;
+        row2.push_back(4);
+        row2.push_back(8);
+        row2.push_back(0);
+        board.push_back(row2);
+
+        vector<int> row3;
+        row3.push_back(7);
+        row3.push_back(6);
+        row3.push_back(5);
+        board.push_back(row3);
+
         std::cout << "Enter your choice of algorithm" << std::endl;
         std::cout << "1. Uniform Cost Search" << std::endl;
         std::cout << "2. A * with the Misplaced Tile heuristic" << std::endl;
@@ -295,10 +312,10 @@ int main(){
             Object.general_search(board, 1);
         }
         else if(userInput == 2){
-            
+            Object.general_search(board, 2);
         }
         else if(userInput == 3){
-           
+           Object.general_search(board, 3);
         }
         else{
             std:: cout << "Not a valid algorithm" << std::endl;
@@ -315,23 +332,31 @@ int main(){
         std::cin >> input1;
         std::cin >> input2;
         std::cin >> input3;
-        /*position[0] = input1;
-        position[1] = input2;
-        position[2] = input3;*/
+        vector<int> row;
+        row.push_back(input1);
+        row.push_back(input2);
+        row.push_back(input3);
+        board.push_back(row);
+        
         std::cout << "Enter the second row, use space or tabs between numbers" << std::endl;
         std::cin >> input1;
         std::cin >> input2;
         std::cin >> input3;
-        /*position[3] = input1;
-        position[4] = input2;
-        position[5] = input3;*/
+        vector<int> row2;
+        row2.push_back(input1);
+        row2.push_back(input2);
+        row2.push_back(input3);
+        board.push_back(row2);
+       
         std::cout << "Enter the third row, use space or tabs between numbers" << std::endl;
         std::cin >> input1;
         std::cin >> input2;
         std::cin >> input3;
-        /*position[6] = input1;
-        position[7] = input2;
-        position[8] = input3;*/
+        vector<int> row3;
+        row3.push_back(input1);
+        row3.push_back(input2);
+        row3.push_back(input3);
+        board.push_back(row3);
 
         std::cout << "Enter your choice of algorithm" << std::endl;
         std::cout << "1. Uniform Cost Search" << std::endl;
@@ -341,13 +366,13 @@ int main(){
         std::cin >> userInput;
 
         if(userInput == 1){
-            
+            Object.general_search(board, 1);
         }
         else if(userInput == 2){
-           
+           Object.general_search(board, 2);
         }
         else if(userInput == 3){
-           
+           Object.general_search(board, 2);
         }
         else{
             std:: cout << "Not a valid algorithm" << std::endl;
