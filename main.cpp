@@ -381,7 +381,7 @@ int main(){
            Object.general_search(board, 2);
         }
         else if(userInput == 3){
-           Object.general_search(board, 2);
+           Object.general_search(board, 3);
         }
         else{
             std:: cout << "Not a valid algorithm" << std::endl;
