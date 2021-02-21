@@ -9,7 +9,7 @@ const int maxPuzzleSize = 9;
 //https://www.geeksforgeeks.org/stl-priority-queue-for-structure-or-class/
 //created class for priority queue
 //expand nodes with smallest f(n) value
-//f(n) = g(n)depth + h(n)heuristic
+//f(n) = g(n)depth + h(n)heuristic how far the current state is from the goal
 //tuple<h(n), g(n), 2dvector>
 //compare struct for priority queue
 struct compare{
