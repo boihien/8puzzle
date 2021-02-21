@@ -9,19 +9,19 @@ const int maxPuzzleSize = 9;
 //https://www.geeksforgeeks.org/stl-priority-queue-for-structure-or-class/
 //created class for priority queue
 //expand nodes with smallest f(n) value
-//f(n) = g(n) + h(n)
-//tuple<h(n), depth, 2dvector>
+//f(n) = g(n)depth + h(n)heuristic
+//tuple<h(n), g(n), 2dvector>
 //compare struct for priority queue
 struct compare{
     bool operator()(tuple<int, int, vector<vector<int>>> b1, tuple<int, int, vector<vector<int>>> b2){
-        return get<0>(b1) + get<1>(b1) > get<0>(b2) + get<1>(b2);//returns the larger f(n)
+        return get<0>(b1) + get<1>(b1) > get<0>(b2) + get<1>(b2);//returns true if second tuple is smaller, min height will be at the top
     }
 };
 class puzzleBoard{
     public:
         puzzleBoard(); //default constructor
-        int totalNodes;//keeps track of total expanded nodes
-        int maxNodesQueue;//keeps track of maximum number of nodes in queue at a time
+        //int totalNodes;//keeps track of total expanded nodes
+        //int maxNodesQueue;//keeps track of maximum number of nodes in queue at a time
         int depth; //depth of the goal node g(n)
         int h; //h(n)
 

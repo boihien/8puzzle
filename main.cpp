@@ -18,6 +18,7 @@ puzzleBoard::puzzleBoard(){//default constructor
     
 }
 
+int totalNodes = 0;
 //expand cheapest cost node
 //g(n) = cost to current
 //h(n) = number of steps to goal
@@ -54,18 +55,26 @@ int puzzleBoard::misplacedHueristic(vector<vector<int>> board){
     if(board[2][1] != 8){
         numMisplaced++;
     }
-
     return numMisplaced;
 
 }
 
 //for each wrong piece move magically into correct position
 //add up number of moves for a total (h(n))
+//used this source to calculate manhatten distance
+//https://stackoverflow.com/questions/19770087/can-somebody-explain-in-manhattan-dstance-for-the-8-puzzle-in-java-for-me
 int puzzleBoard::manhattenDistance(vector<vector<int>> board){
     int total = 0;
     for(int i = 0; i < 3; i++){//row
         for(int j = 0; j < 3; j++){
-            
+            int value = board[i][j];
+            if(value != 0){//dont need to count for 0
+                int targetx = (value - 1) / 3; //want x coord
+                int targety = (value - 1) % 3; //want y coord
+                int distancex = i - targetx; //distance to the target x
+                int distancey = j - targety; //distance to target y
+                total += abs(distancex) + abs(distancey); // add up total
+            }
         }
     }
     return total;
@@ -77,7 +86,8 @@ bool puzzleBoard::solvedState(vector<vector<int>> board){
     return false;
 }
 void puzzleBoard::general_search(vector<vector<int>> board, int algo){
-    int heuristic = 0;
+    int heuristic, maxNodes, maxQueue = 0;
+    int success = -1;
     if(algo == 1){
         heuristic = 0;//uniform cost sets h = 0
     }
@@ -88,9 +98,6 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
         heuristic = manhattenDistance(board);
     }
     std::cout << "reached here" << std::endl;
-
-    int maxNodes = 0;
-    int success = -1;
 
     tuple<int, int, std::vector<vector<int>>> node (heuristic, 0, board);
 
@@ -121,7 +128,7 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
             success == 0;
             return;
         }
-        TOQ = pq.top(); //set teuple t to be the top of pq
+        TOQ = pq.top(); //set teuple TOQ to be the top of pq
         get<2>(node) = get<2>(TOQ); //get 2d vector in node and set to t
         pq.pop();//removing front node since no goal
 
@@ -135,13 +142,15 @@ void puzzleBoard::general_search(vector<vector<int>> board, int algo){
                 std::cout << endl;
             } 
             std::cout << "expanded a total of " << totalNodes << std::endl;
-            std::cout << "max number of nodes in queue was " << std::endl;
+            std::cout << "max number of nodes in queue was " << maxQueue << std::endl;
             std::cout << "depth of goal was " << get<1>(TOQ) << std::endl;
             success = 1;
             return;
         }
         std::cout<< "reached here2" << std::endl;
         expansion(TOQ, pq, algo);
+        int currentQueue = pq.size();
+        maxQueue = max(currentQueue, maxQueue);
 
         TOQ = pq.top();//set current tuple to the new top
         matrix = get<2>(TOQ);//set matrix to the 2d vector in current tuple
