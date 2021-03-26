@@ -1,13 +1,3 @@
-Assignment 1 					      CS170: Introduction to Artificial Intelligence	
-
-Boi-Hien Huang								Dr. Eamonn Keogh
-
-862012798
-
-bhutan019@ucr.edu
-
-2-15-2021
-
 In order to complete this assignment, I consulted the following sources. 
 
 * https://stackoverflow.com/questions/19770087/can-somebody-explain-in-manhattan-dstance-for-the-8-puzzle-in-java-for-me
